@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.print.attribute.Size2DSyntax;
 
 public class Game {
 	ArrayList<Session> sessions = new ArrayList<>();
@@ -22,20 +21,38 @@ public class Game {
 		Game rockPapaerSissorsGame = new Game();
 		rockPapaerSissorsGame.showAllSession();
 
+		// create a session 1 with a single player or client
 		rockPapaerSissorsGame.createSession(1, "moha");
 		rockPapaerSissorsGame.showAllSession();
-//		
+		
+		// create a session 2 with a single player or client 
 		rockPapaerSissorsGame.createSession(2, "moha");
 		rockPapaerSissorsGame.showAllSession();
-		
+
+		// player or client  join session 2 
 		rockPapaerSissorsGame.joinSession(2, "moha");
 		rockPapaerSissorsGame.showAllSession();
-//		
-		rockPapaerSissorsGame.joinSession(2, "moha");
-		
+
+		// player or client 2 leave session 2
 		rockPapaerSissorsGame.leaveSession(2, 1);
 		rockPapaerSissorsGame.showAllSession();
 
+		// player or client  join session 2
+		rockPapaerSissorsGame.joinSession(2, "moha");
+		rockPapaerSissorsGame.showAllSession();
+
+		// player or client 2 leave session 2
+		rockPapaerSissorsGame.leaveSession(2, 2);
+		rockPapaerSissorsGame.showAllSession();
+
+		// player or client  join session 2
+		rockPapaerSissorsGame.joinSession(2, "moha");
+		rockPapaerSissorsGame.showAllSession();
+		
+		// create a session with a single player or client in session1
+		rockPapaerSissorsGame.leaveSession(1, 1);
+		rockPapaerSissorsGame.showAllSession();
+		
 //		session.deleteClient(1);
 //		session.showPlayers();
 //		
@@ -54,17 +71,17 @@ public class Game {
 		else
 			sessions.add(new Session(sessionID, 1, name));
 	}
-	
+
 	private boolean isSessionExist(int sessionID) {
 		for (Session session : sessions)
 			if (session.getId() == sessionID)
 				return true;
 		return false;
 	}
-	
+
 	private void deleteSession(int sessionID) {
 		Iterator<Session> sessionsIterator = sessions.iterator();
-		
+
 		while (sessionsIterator.hasNext()) {
 			Session session = (Session) sessionsIterator.next();
 			if (session.getId() == sessionID) {
@@ -72,7 +89,7 @@ public class Game {
 //				System.out.println(player.getName() +" deleted!");
 			}
 		}
-				
+
 	}
 
 //	private boolean isSessionEmpty(int sessionID) {
@@ -112,7 +129,7 @@ public class Game {
 	private void showAllSession() {
 		System.out.println("acctual sessions: " + sessions.size());
 		if (sessions.size() > 0) {
-			System.out.println("########### Show all Sessions #############");
+			System.out.println("-------------- Show all Sessions --------------");
 			for (Session session : sessions) {
 				System.out.println("Session ID: " + session.getId());
 				System.out.println("Session Score: " + session.getScore()[0] + " - " + session.getScore()[1]);
@@ -124,8 +141,10 @@ public class Game {
 				}
 
 				session.showPlayers();
-				System.out.println("##########################################\n");
+				System.out.println("---------------------------------------------------\n");
+
 			}
+			System.out.println("##########################################\n");
 		} else {
 			System.out.println("There's no session ! \n");
 		}
