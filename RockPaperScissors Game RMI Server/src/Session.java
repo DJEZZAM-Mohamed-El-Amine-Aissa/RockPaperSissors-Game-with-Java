@@ -44,7 +44,7 @@ public class Session {
 		players.add(createClient(clientID, name));
 	}
 
-	private Client createClient(int clientID, String name) {
+	protected Client createClient(int clientID, String name) {
 		if (isPlayerExist(name)) {
 			return new Client(getId(), clientID, name+"_2");
 		}
@@ -55,7 +55,7 @@ public class Session {
 		players.add(createClient(clientID, name));
 	}
 	
-	private void deleteClient(int clinetID) {
+	protected void deleteClient(int clinetID) {
 		Iterator<Client> plyersIterator = players.iterator();
 		
 		while (plyersIterator.hasNext()) {
@@ -90,6 +90,12 @@ public class Session {
 	
 	protected boolean isFull() {
 		if (players.size() == 2)
+			return true;
+		return false;
+	}
+	
+	protected boolean isEmpty() {
+		if (players.size() == 0) 
 			return true;
 		return false;
 	}

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.print.attribute.Size2DSyntax;
 
@@ -25,11 +26,15 @@ public class Game {
 		rockPapaerSissorsGame.showAllSession();
 //		
 		rockPapaerSissorsGame.createSession(2, "moha");
+		rockPapaerSissorsGame.showAllSession();
+		
 		rockPapaerSissorsGame.joinSession(2, "moha");
-////		rockPapaerSissorsGame.
 		rockPapaerSissorsGame.showAllSession();
 //		
-//		rockPapaerSissorsGame.joinSession(2, "moha");
+		rockPapaerSissorsGame.joinSession(2, "moha");
+		
+		rockPapaerSissorsGame.leaveSession(2, 1);
+		rockPapaerSissorsGame.showAllSession();
 
 //		session.deleteClient(1);
 //		session.showPlayers();
@@ -49,22 +54,35 @@ public class Game {
 		else
 			sessions.add(new Session(sessionID, 1, name));
 	}
-
+	
 	private boolean isSessionExist(int sessionID) {
 		for (Session session : sessions)
 			if (session.getId() == sessionID)
 				return true;
 		return false;
 	}
-
-	private boolean isSessionEmpty(int sessionID) {
-		for (Session session : sessions)
-			if (session.getId() == sessionID)
-				if (session.getPlayers().size() == 20)
-					return true;
-		return false;
-
+	
+	private void deleteSession(int sessionID) {
+		Iterator<Session> sessionsIterator = sessions.iterator();
+		
+		while (sessionsIterator.hasNext()) {
+			Session session = (Session) sessionsIterator.next();
+			if (session.getId() == sessionID) {
+				sessionsIterator.remove();
+//				System.out.println(player.getName() +" deleted!");
+			}
+		}
+				
 	}
+
+//	private boolean isSessionEmpty(int sessionID) {
+//		for (Session session : sessions)
+//			if (session.getId() == sessionID)
+//				if (session.getPlayers().size() == 0)
+//					return true;
+//		return false;
+//
+//	}
 
 	private void joinSession(int sessionID, String name) {
 		if (isSessionExist(sessionID)) {
@@ -83,9 +101,12 @@ public class Game {
 		}
 	}
 
-	private void leaveSession() {
-		// TODO Auto-generated method stub
-
+	private void leaveSession(int sessionID, int clientID) {
+		Session session = getSessionsByID(sessionID);
+		if (session.isFull()) // there is 2 players
+			session.deleteClient(clientID);
+		else // there is 1 player
+			deleteSession(sessionID);
 	}
 
 	private void showAllSession() {
